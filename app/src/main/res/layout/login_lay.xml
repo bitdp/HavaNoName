@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,11 +11,17 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/et_name"
             android:hint="用户名"
+            android:maxLines="1"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <EditText
+            android:id="@+id/et_pass"
             android:hint="密码"
+            android:maxLines="1"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <Button
@@ -22,6 +29,13 @@
             android:text="登录"
             android:background="@android:color/darker_gray"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_reg"
+            android:text="注册"
+            android:layout_gravity="right"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 

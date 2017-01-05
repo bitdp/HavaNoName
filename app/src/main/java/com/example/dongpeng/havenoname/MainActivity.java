@@ -1,55 +1,57 @@
 package com.example.dongpeng.havenoname;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.widget.Button;
+import android.widget.FrameLayout;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.dongpeng.havenoname.base.BaseActivity;
 import com.example.dongpeng.havenoname.entity.Person;
-import com.example.dongpeng.havenoname.utils.ToastUtil;
-
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
+import com.example.dongpeng.havenoname.my.MyFragment;
 
 public class MainActivity extends BaseActivity {
-    private Button button;
-
+    private BottomNavigationBar bottom_navigation_bar;
+    private FrameLayout content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main);
+        content= (FrameLayout) findViewById(R.id.content);
         Person p2 = new Person();
         p2.setName("lucky");
-        p2.setAddress("北京海淀");
-        button = (Button) findViewById(R.id.button);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                BmobQuery<Person> query = new BmobQuery<Person>();
-//                //查询playerName叫“比目”的数据
-//                query.addWhereEqualTo("name", "lucky");
-//                //返回50条数据，如果不加上这条语句，默认返回10条数据
-//                query.setLimit(1);
-//                //执行查询方法
-//                query.findObjects(new FindListener<Person>() {
-//                    @Override
-//                    public void done(List<Person> object, BmobException e) {
-//                        if (e == null) {
-//                            showToast("查询成功：共" + object.size() + "条数据。");
-//                        } else {
-//                            showToast("失败：" + e.getMessage() );
-//                        }
-//                    }
-//                });
-//            }
-//        });
-        p2.save(new SaveListener<String>() {
+        p2.setPassword("北京海淀");
+        bottom_navigation_bar= (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+        bottom_navigation_bar.setActiveColor(R.color.colorPrimary)
+                .setInActiveColor(R.color.colorGray);
+//                .setBarBackgroundColor(Color.YELLOW);
+        bottom_navigation_bar
+                .addItem(new BottomNavigationItem(R.mipmap.tab_btn_home_default, "首页"))
+                .addItem(new BottomNavigationItem(R.mipmap.tab_btn_home_default, "音乐"))
+                .addItem(new BottomNavigationItem(R.mipmap.tab_btn_home_default, "电影"))
+                .addItem(new BottomNavigationItem(R.mipmap.tab_btn_home_default, "我的"))
+                .initialise();
+        bottom_navigation_bar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
-            public void done(String objectId,BmobException e) {
-                if(e==null){
-                    ToastUtil.show(MainActivity.this,"添加数据成功，返回objectId为："+objectId);
-                }else{
-                    ToastUtil.show(MainActivity.this,"创建数据失败：" + e.getMessage());
+            public void onTabSelected(int position) {
+                if (position==3){
+                    MyFragment myFragment=new MyFragment();
+                    FragmentManager manager=getFragmentManager();
+                    FragmentTransaction transaction=manager.beginTransaction();
+                    transaction.replace(R.id.content,myFragment);
+                    transaction.commit();
                 }
+            }
+
+            @Override
+            public void onTabUnselected(int position) {
+
+            }
+
+            @Override
+            public void onTabReselected(int position) {
+
             }
         });
     }

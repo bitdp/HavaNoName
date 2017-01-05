@@ -8,7 +8,7 @@ import cn.bmob.v3.BmobObject;
 
 public class Person extends BmobObject {
     private String name;
-    private String address;
+    private String password;
 
     public String getName() {
         return name;
@@ -18,11 +18,11 @@ public class Person extends BmobObject {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
