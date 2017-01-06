@@ -3,5 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <TextView
+        android:padding="10dp"
+        android:text="第二种方案是Retrofit 2的新特性。现在你可以轻松构造一个动态地址来作为全路径请求。这对于一些特殊文件的下载是非常有用的，也就是说这个请求可能要依赖一些参数，比如用户信息或者时间戳等。你可以在运行时构"
+        android:layout_width="match_parent"
+        android:background="@android:color/white"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:background="#e6e6e6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/bt_cancle"
+            android:text="取消"
+            android:shadowDx="0"
+            android:layout_weight="1"
+            android:layout_width="1dp"
+            android:background="@android:color/white"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/bt_update"
+            android:text="更新"
+            android:shadowDx="0"
+            android:layout_weight="1"
+            android:layout_width="1dp"
+            android:background="@android:color/white"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>
