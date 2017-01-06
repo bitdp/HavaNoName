@@ -53,7 +53,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_update:
                 Dialog dialog=new Dialog(getActivity());
                 dialog.setContentView(R.layout.login_lay);
-
+                dialog.setCancelable(false);
                 dialog.show();
                 break;
             default:
