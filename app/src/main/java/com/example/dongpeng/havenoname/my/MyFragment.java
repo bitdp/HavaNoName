@@ -14,16 +14,16 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.dongpeng.havenoname.R;
 import com.example.dongpeng.havenoname.entity.Person;
 import com.example.dongpeng.havenoname.interfac.ProgressListener;
 import com.example.dongpeng.havenoname.utils.DensityUtil;
+import com.example.dongpeng.havenoname.utils.LogUtil;
+import com.example.dongpeng.havenoname.utils.SaveFileUtil;
 import com.example.dongpeng.havenoname.utils.httputil.HttpUtils;
-import java.io.File;
-import java.io.IOException;
+
 import okhttp3.ResponseBody;
-import okio.BufferedSink;
-import okio.Okio;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,10 +33,10 @@ import retrofit2.Response;
  */
 
 public class MyFragment extends Fragment implements View.OnClickListener {
+    private boolean isCreated=false;
     private String fileUrl="http://192.168.12.30:8080/aaa.pdf";
     private TextView tv_register,
                       tv_update;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,7 +45,8 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    private void initView(View view) {
+    public void initView(View view) {
+        LogUtil.d("======onCreateView=======");
         tv_register = (TextView) view.findViewById(R.id.tv_register);
         tv_register.setOnClickListener(this);
         tv_update= (TextView) view.findViewById(R.id.tv_update);
@@ -53,6 +54,14 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         drawable.setBounds(0, 0, DensityUtil.dp2px(getActivity(),20), DensityUtil.dp2px(getActivity(),20));//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         tv_update.setCompoundDrawables(drawable, null, null, null);//只放左边
         tv_update.setOnClickListener(this);
+        if (!isCreated){
+            loadData();
+        }
+    }
+
+    private void loadData() {
+        LogUtil.d("=======loadData======");
+        isCreated=true;
     }
 
     @Override
@@ -77,7 +86,8 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 view.findViewById(R.id.bt_update).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        downLoadFile();
+                        downLoadFile(dialog);
+                        dialog.dismiss();
                     }
                 });
                 dialog.show();
@@ -87,9 +97,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void downLoadFile() {
-        File file=getActivity().getExternalCacheDir();
-        final File downFile=new File(file,"测试.pdf");
+    private void downLoadFile(final Dialog dialog) {
         HttpUtils.createService(new ProgressListener() {
             @Override
             public void update(long bytesRead, long contentLength, boolean done) {
@@ -98,38 +106,12 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         }).downloadAPK(fileUrl).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful())
-                {
-                    BufferedSink sink = null;
-                    //下载文件到本地
-                    try
-                    {
-                        sink = Okio.buffer(Okio.sink(downFile));
-                        sink.writeAll(response.body().source());
-                    } catch(Exception e)
-                    {
-                        e.printStackTrace();
-                    } finally
-                    {
-                        try
-                        {
-                            if(sink != null) sink.close();
-                        } catch(IOException e)
-                        {
-                            e.printStackTrace();
-                        }
-
-                    }
-                    Toast.makeText(getActivity(), "下载成功", Toast.LENGTH_SHORT).show();
-                    Log.d("下载成功", "isSuccessful");
-                } else
-                {
-                    Log.d("---------------------", response.code() + "");
-                }
+                new SaveFileUtil().saveFile(getActivity(),response);
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(getActivity(), "onFailure" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -140,5 +122,11 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         Person person = (Person) data.getSerializableExtra("person");
         Log.e("------------", requestCode + "");
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        LogUtil.d("======onHiddenChanged=======");
     }
 }

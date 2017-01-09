@@ -14,7 +14,6 @@ import retrofit2.http.Url;
  */
 public interface ApiService
 {
-
     @Streaming
     @GET()
     Call<ResponseBody> downloadAPK(@Url String url);
