@@ -23,6 +23,9 @@ import com.example.dongpeng.havenoname.utils.LogUtil;
 import com.example.dongpeng.havenoname.utils.SaveFileUtil;
 import com.example.dongpeng.havenoname.utils.httputil.HttpUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +36,7 @@ import retrofit2.Response;
  */
 
 public class MyFragment extends Fragment implements View.OnClickListener {
+    List<String> list=new ArrayList<>();
     private boolean isCreated=false;
     private String fileUrl="http://192.168.12.30:8080/aaa.pdf";
     private TextView tv_register,
@@ -46,7 +50,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     }
 
     public void initView(View view) {
-        LogUtil.d("======onCreateView=======");
+        LogUtil.d(list.toString());
         tv_register = (TextView) view.findViewById(R.id.tv_register);
         tv_register.setOnClickListener(this);
         tv_update= (TextView) view.findViewById(R.id.tv_update);
@@ -61,6 +65,8 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
     private void loadData() {
         LogUtil.d("=======loadData======");
+        list.add("999");
+        list.add("888");
         isCreated=true;
     }
 
