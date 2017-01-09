@@ -14,16 +14,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.dongpeng.havenoname.R;
 import com.example.dongpeng.havenoname.entity.Person;
 import com.example.dongpeng.havenoname.interfac.ProgressListener;
 import com.example.dongpeng.havenoname.utils.DensityUtil;
 import com.example.dongpeng.havenoname.utils.httputil.HttpUtils;
-
 import java.io.File;
 import java.io.IOException;
-
 import okhttp3.ResponseBody;
 import okio.BufferedSink;
 import okio.Okio;
@@ -36,7 +33,7 @@ import retrofit2.Response;
  */
 
 public class MyFragment extends Fragment implements View.OnClickListener {
-    private String fileUrl="http://192.168.12.43:8080/aaa.pdf";
+    private String fileUrl="http://192.168.12.30:8080/aaa.pdf";
     private TextView tv_register,
                       tv_update;
 

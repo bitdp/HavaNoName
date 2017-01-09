@@ -1,9 +1,7 @@
 package com.example.dongpeng.havenoname.custom;
 
 import com.example.dongpeng.havenoname.interfac.ProgressListener;
-
 import java.io.IOException;
-
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import okio.Buffer;
