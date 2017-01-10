@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@color/colorPrimary"
+    android:orientation="horizontal">
+    <ImageButton
+        android:layout_width="30dp"
+        android:background="@null"
+        android:src="@mipmap/ic_action_arrow_left"
+        android:layout_height="30dp" />
+
+    <TextView
+        android:text="这是标题"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center_vertical"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView" />
+    <ImageButton
+        android:layout_width="30dp"
+        android:background="@null"
+        android:src="@mipmap/ic_action_info"
+        android:layout_height="30dp" />
+
+</LinearLayout>
