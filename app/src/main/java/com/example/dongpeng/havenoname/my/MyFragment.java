@@ -1,12 +1,11 @@
 package com.example.dongpeng.havenoname.my;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dongpeng.havenoname.R;
+import com.example.dongpeng.havenoname.adapter.MyOptionAdapter;
 import com.example.dongpeng.havenoname.entity.Person;
 import com.example.dongpeng.havenoname.interfac.ProgressListener;
 import com.example.dongpeng.havenoname.utils.DensityUtil;
 import com.example.dongpeng.havenoname.utils.LogUtil;
 import com.example.dongpeng.havenoname.utils.SaveFileUtil;
 import com.example.dongpeng.havenoname.utils.httputil.HttpUtils;
+import com.example.dongpeng.havenoname.view.NoScrollListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.dongpeng.havenoname.R.id.tv_update;
+
 /**
  * Created by dongpeng on 2017/1/4.
  */
@@ -39,8 +42,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     List<String> list=new ArrayList<>();
     private boolean isCreated=false;
     private String fileUrl="http://192.168.12.30:8080/aaa.pdf";
-    private TextView tv_register,
-                      tv_update;
+    private TextView tv_register;
+//                      tv_update;
+    private NoScrollListView lv;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,23 +54,23 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     }
 
     public void initView(View view) {
-        LogUtil.d(list.toString());
+        lv= (NoScrollListView) view.findViewById(R.id.lv);
         tv_register = (TextView) view.findViewById(R.id.tv_register);
         tv_register.setOnClickListener(this);
-        tv_update= (TextView) view.findViewById(R.id.tv_update);
-        Drawable drawable = ContextCompat.getDrawable(getActivity(),R.mipmap.update);
-        drawable.setBounds(0, 0, DensityUtil.dp2px(getActivity(),20), DensityUtil.dp2px(getActivity(),20));//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        tv_update.setCompoundDrawables(drawable, null, null, null);//只放左边
-        tv_update.setOnClickListener(this);
+//        Drawable drawable = ContextCompat.getDrawable(getActivity(),R.mipmap.update);
+//        drawable.setBounds(0, 0, DensityUtil.dp2px(getActivity(),20), DensityUtil.dp2px(getActivity(),20));//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+//        tv_update.setCompoundDrawables(drawable, null, null, null);//只放左边
+//        tv_update.setOnClickListener(this);
         if (!isCreated){
             loadData();
         }
+        for (int i=0;i<30;i++){
+            list.add("这是第"+i+"条数据");
+        }
+        lv.setAdapter(new MyOptionAdapter(getActivity(),list));
     }
 
     private void loadData() {
-        LogUtil.d("=======loadData======");
-        list.add("999");
-        list.add("888");
         isCreated=true;
     }
 
@@ -77,7 +81,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivityForResult(intent, 1);
                 break;
-            case R.id.tv_update:
+            case tv_update:
                 View view=LayoutInflater.from(getActivity()).inflate(R.layout.update_dialog,null);
                 LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(DensityUtil.dp2px(getActivity(),200), ViewGroup.LayoutParams.WRAP_CONTENT);
                 final Dialog dialog=new Dialog(getActivity(), R.style.customDialog);
@@ -126,8 +130,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Person person = (Person) data.getSerializableExtra("person");
-        Log.e("------------", requestCode + "");
+        if (resultCode== Activity.RESULT_OK&&requestCode==1){
+            Person person = (Person) data.getSerializableExtra("person");
+            Log.e("------------", requestCode + "");
+        }
     }
 
     @Override

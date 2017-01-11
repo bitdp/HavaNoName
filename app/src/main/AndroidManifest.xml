@@ -21,13 +21,14 @@
         android:supportsRtl="true"
         android:name=".myapplication.MyApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".acitivity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".my.LoginActivity"/>
         <activity android:name=".my.RegeisterActivity"/>
 

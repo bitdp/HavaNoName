@@ -1,7 +1,6 @@
 package com.example.dongpeng.havenoname.utils;
 
 import android.util.Log;
-
 import com.example.dongpeng.havenoname.BuildConfig;
 
 /**
@@ -12,6 +11,11 @@ public class LogUtil {
     public static void d(String msg){
         if (BuildConfig.DEBUG){
             Log.d("------", msg);
+        }
+    }
+    public static void e(String msg){
+        if (BuildConfig.DEBUG){
+            Log.e("------", msg);
         }
     }
 }
