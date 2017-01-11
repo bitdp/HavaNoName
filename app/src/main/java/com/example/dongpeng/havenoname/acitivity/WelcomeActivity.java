@@ -38,7 +38,7 @@ public class WelcomeActivity extends Activity {
                     WelcomeActivity.this.finish();
                 }
             } else {
-                tv_wel.setText(i + "秒后进入应用" + "(跳过)");
+                tv_wel.setText("("+i + "s跳过)");
                 handler.sendEmptyMessageDelayed(1, 1000);
                 i = i - 1;
             }
