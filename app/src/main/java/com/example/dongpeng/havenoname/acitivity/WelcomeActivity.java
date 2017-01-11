@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.example.dongpeng.havenoname.MainActivity;
 import com.example.dongpeng.havenoname.R;
+import com.example.dongpeng.havenoname.firsttime.FirstTimeActivity;
 import com.example.dongpeng.havenoname.utils.LogUtil;
+import com.example.dongpeng.havenoname.utils.SharedPreferenceUtil;
 
 /**
  * Created by dongpeng on 2017/1/10.
@@ -26,13 +28,19 @@ public class WelcomeActivity extends Activity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (i == -1) {
-            LogUtil.e("handler");
+                LogUtil.e("handler");
                 handler.removeCallbacksAndMessages(null);
-                startActivity();
-            }else{
+                if (SharedPreferenceUtil.getInstance(WelcomeActivity.this).getBoolean("noFirst")) {
+                    startActivity();
+                } else {
+                    Intent intent = new Intent(WelcomeActivity.this, FirstTimeActivity.class);
+                    startActivity(intent);
+                    WelcomeActivity.this.finish();
+                }
+            } else {
                 tv_wel.setText(i + "秒后进入应用" + "(跳过)");
                 handler.sendEmptyMessageDelayed(1, 1000);
-                i=i-1;
+                i = i - 1;
             }
         }
     };
@@ -52,6 +60,7 @@ public class WelcomeActivity extends Activity {
                 startActivity();
             }
         });
+
     }
 
     void startActivity() {

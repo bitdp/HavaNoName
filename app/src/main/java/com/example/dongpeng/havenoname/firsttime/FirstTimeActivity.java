@@ -10,7 +10,8 @@ import android.widget.ImageView;
 
 import com.example.dongpeng.havenoname.MainActivity;
 import com.example.dongpeng.havenoname.R;
-import com.example.dongpeng.havenoname.acitivity.WelcomeActivity;
+import com.example.dongpeng.havenoname.adapter.MyWelcomePagerAdapter;
+import com.example.dongpeng.havenoname.utils.SharedPreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +27,17 @@ public class FirstTimeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.welcome);
+        setContentView(R.layout.first_lay);
+        SharedPreferenceUtil.getInstance(FirstTimeActivity.this).saveToSp("noFirst",true);
         vp = (ViewPager) findViewById(R.id.vp);
-        ImageView iv=new ImageView(FirstTimeActivity.this);
-        iv.setImageResource(R.mipmap.ccc);
-        views.add(iv);
-        iv.setImageResource(R.mipmap.aaa);
-        views.add(iv);
+        ImageView iv1=new ImageView(FirstTimeActivity.this);
+        iv1.setImageResource(R.mipmap.ccc);
+        iv1.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        views.add(iv1);
+        ImageView iv2=new ImageView(FirstTimeActivity.this);
+        iv2.setImageResource(R.mipmap.aaa);
+        iv2.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        views.add(iv2);
         View view= LayoutInflater.from(FirstTimeActivity.this).inflate(R.layout.wel_img,null);
         view.findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +48,6 @@ public class FirstTimeActivity extends Activity {
             }
         });
         views.add(view);
-
+        vp.setAdapter(new MyWelcomePagerAdapter(views));
     }
 }

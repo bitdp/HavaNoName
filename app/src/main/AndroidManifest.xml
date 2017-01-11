@@ -31,6 +31,7 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".my.LoginActivity"/>
         <activity android:name=".my.RegeisterActivity"/>
+        <activity android:name=".firsttime.FirstTimeActivity"/>
 
     </application>
 
