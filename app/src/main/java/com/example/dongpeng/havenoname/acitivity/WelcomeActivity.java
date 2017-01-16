@@ -60,7 +60,6 @@ public class WelcomeActivity extends Activity {
                 startActivity();
             }
         });
-
     }
 
     void startActivity() {
