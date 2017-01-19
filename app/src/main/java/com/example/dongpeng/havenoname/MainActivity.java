@@ -12,6 +12,7 @@ import com.example.dongpeng.havenoname.adapter.MyViewPagerAdapter;
 import com.example.dongpeng.havenoname.base.BaseActivity;
 import com.example.dongpeng.havenoname.home.HomeFragment;
 import com.example.dongpeng.havenoname.my.MyFragment;
+import com.example.dongpeng.havenoname.tantan.TanTanFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.main);
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
-        for (int i = 0; i < 3; i++) {
+        fragments.add(new TanTanFragment());
+        for (int i = 0; i < 1; i++) {
             fragments.add(new MyFragment());
         }
         vp = (ViewPager) findViewById(R.id.vp);

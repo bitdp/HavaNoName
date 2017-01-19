@@ -5,4 +5,8 @@
         <attr name="border_color" format="color" />
         <attr name="border_overlay" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="ShopView">
+        <attr name="bac_color" format="color"/>
+        <attr name="text_size" format="dimension"/>
+    </declare-styleable>
 </resources>

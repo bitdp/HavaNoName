@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
 import com.example.dongpeng.havenoname.R;
 import com.example.dongpeng.havenoname.utils.ToastUtil;
+import com.example.dongpeng.havenoname.view.ShopView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +21,14 @@ import java.util.List;
  */
 
 public class HomeFragment extends Fragment {
+    private ShopView sv;
     private List<String> data = new ArrayList<>();
-    ViewFlipper vf;
-
+    private ViewFlipper vf;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_lay, container, false);
+        sv= (ShopView) view.findViewById(R.id.sv);
         initData();
         vf = (ViewFlipper) view.findViewById(R.id.vf);
         if (data.size() % 2 == 1) {//数据源为偶数
