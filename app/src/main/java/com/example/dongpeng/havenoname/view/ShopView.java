@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.Region;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +35,7 @@ public class ShopView extends View {
     private ValueAnimator animator_bt,animator_del;
     private float fraction_bt=0,fraction_del;
     private Path path=new Path();
+    private Region region_del,region_add;
 
     public ShopView(Context context) {
         super(context);
@@ -49,6 +51,8 @@ public class ShopView extends View {
     }
 
     private void init() {
+        region_del=new Region();
+        region_add=new Region();
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(bac_color);
         mPaint_Path=new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -135,11 +139,14 @@ public class ShopView extends View {
         path.reset();
         path.addCircle(fraction_del*(mHeight-mWidht)+mWidht-mHeight/2,mHeight/2,mHeight/2-circle_width/2, Path.Direction.CW);
         canvas.drawPath(path,mPaint_Path);
-
+        region_del.setPath(path,new Region(0,0,mHeight,mHeight));
+//        region_del.set(0,0,mHeight,mHeight);
         path.reset();
         path.addCircle(mWidht-mHeight/2,mHeight/2,mHeight/2, Path.Direction.CW);
         mPaint.setColor(bac_color);
         canvas.drawPath(path,mPaint);
+        region_add.set(mWidht-mHeight,0,mWidht,mHeight);
+
     }
 
     /**
@@ -170,9 +177,17 @@ public class ShopView extends View {
                 downTime=System.currentTimeMillis();
                 break;
             case MotionEvent.ACTION_UP:
-                if (System.currentTimeMillis()-downTime<500){
-                    ToastUtil.show(getContext(),"加入购物车");
-                    changeView();
+                if (isShopButton){
+                    if (System.currentTimeMillis()-downTime<500){
+                        ToastUtil.show(getContext(),"加入购物车");
+                        changeView();
+                    }
+                }else{
+                    if (region_del.contains((int)event.getX(),(int)event.getY())){
+                        ToastUtil.show(getContext(),"删除");
+                    }else if (region_add.contains((int)event.getX(),(int)event.getY())){
+                        ToastUtil.show(getContext(),"添加");
+                    }
                 }
                 break;
             default:
